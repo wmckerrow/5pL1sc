@@ -7,8 +7,8 @@ readme.
 ### Step 1: Cell Ranger
 5' scL1seq uses a custom Cell Ranger database to find LINE-1 aligning reads. You can
 download these at the following links.
-- Human: [humanurl](humanurl)
-- Mouse: [mouseurl](mouseurl)
+- Human: [https://slice.med.nyu.edu/data/5scL1seq\_cellranger\_index\_human.tar.gz](https://slice.med.nyu.edu/data/5scL1seq_cellranger_index_human.tar.gz)
+- Mouse: [https://slice.med.nyu.edu/data/5scL1seq\_cellranger\_index\_mouse.tar.gz](https://slice.med.nyu.edu/data/5scL1seq_cellranger_index_mouse.tar.gz)
 
 Then you can run cellranger count to align reads and count gene UMIs. Instructions to
 obtain and run cellranger count can be found here.
