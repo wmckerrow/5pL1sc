@@ -1,22 +1,3 @@
-"""
-This script reads through a bam file resulting from a bwa aln alignment to the L1EM reference.
-The output is a sparse matrix in which the rows are reads, the columns are transcripts
-and the entries are the likelihood of that read arising from that transcript.
-The matrix is pickled and saved. The column names are writted to a text file.
-Part of the L1-EM package.
-Copyright (C) 2019 Wilson McKerrow
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""
-
 import pysam
 import sys
 import random
@@ -97,7 +78,7 @@ def main():
 			UMI_dict[CB] = r1_UMI_dict[CB].intersection(r2_UMI_dict[CB])
 
 	for CB in UMI_dict:
-		print CB+'\t'+str(len(UMI_dict[CB]))
+		print (CB+'\t'+str(len(UMI_dict[CB])))
 
 if __name__ == '__main__':
 	main()
