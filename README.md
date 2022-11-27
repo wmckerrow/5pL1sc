@@ -4,11 +4,34 @@ This repository contains python scripts for counting UMIs from 10x genomics 5' t
 single cell RNA-seq with 100+ base pair paired end reads. Instructions are given in this
 readme.
 
-### Step 1: Cell Ranger
-5' scL1seq uses a custom Cell Ranger database to find LINE-1 aligning reads. You can
-download these at the following links.
-- Human: [https://slice.med.nyu.edu/data/5scL1seq\_cellranger\_index\_human.tar.gz](https://slice.med.nyu.edu/data/5scL1seq_cellranger_index_human.tar.gz)
-- Mouse: [https://slice.med.nyu.edu/data/5scL1seq\_cellranger\_index\_mouse.tar.gz](https://slice.med.nyu.edu/data/5scL1seq_cellranger_index_mouse.tar.gz)
+### Step 1: Build the custom cellranger index (human)
+Building the cellranger custom index, will require bedtools and cellranger. Both are
+available for install via anaconda:
+-https://anaconda.org/bioconda/bedtools
+-https://anaconda.org/hcc/cellranger
+
+Before beginning you will need the ucsc genome browser version of the hg38 human genome,
+which can be downloaded as follows:
+```
+curl -L -O http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+zcat hg38.fa.gz > hg38.fa
+```
+
+You will also need hg38 gene annotations in gtf format, which can be downloaded as follows:
+
+```curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
+zcat Homo_sapiens.GRCh38.108.chr.gtf.gz > Homo_sapiens.GRCh38.108.gtf
+sed -i 's/^/chr//g' Homo_sapiens.GRCh38.108.gtf
+```
+
+You can then use the provided shell script to build the index:
+```
+bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_annotation/L1HS_and_PA.bed /path/to/5pL1sc/L1_annotation/L1HS_and_dfam_L1PA.fa /path/to/Homo_sapiens.GRCh38.108.gtf
+```
+
+This will create the custom cellranger index in a new directory called L1HS\_L1PA\_seperated\_hg38
+
+### Step 2: Cellranger
 
 Then you can run cellranger count to align reads and count gene UMIs. Instructions to
 obtain and run cellranger count can be found here.
@@ -22,7 +45,7 @@ cellranger count --sample=<sample name> --id=<output id> --transcriptome=/path/t
 If combining multiple samples, we recommend running [cellranger aggr](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/aggregate) to downsample reads
 and avoid artifacts that may result from samples sequenced to different depths.
 
-### Step 2: Count UMIs
+### Step 3: Count UMIs
 LINE-1 UMIs are counted using:
 - count\_properpairUMIs\_in\_range\_by\_nM.py
 To count human LINE-1 in a single sample, you need only specify the bam file output by
