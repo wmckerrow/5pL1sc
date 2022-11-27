@@ -23,6 +23,7 @@ You will also need hg38 gene annotations in gtf format, which can be downloaded 
 curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
 zcat Homo_sapiens.GRCh38.108.gtf.gz > Homo_sapiens.GRCh38.108.gtf
 sed -i 's/^/chr/g' Homo_sapiens.GRCh38.108.gtf
+sed -i 's/^chr#/#/g' Homo_sapiens.GRCh38.108.gtf
 ```
 
 You can then use the provided shell script to build the index:
@@ -32,6 +33,37 @@ bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_ann
 
 This will create the custom cellranger index in a new directory called L1HS\_L1PA\_seperated\_hg38
 
+### Step 1 v2: Build the custom cellranger index (mouse)
+### Step 1: Build the custom cellranger index (human)
+Building the cellranger custom index, will require bedtools and cellranger. Both are
+available for install via anaconda:
+-https://anaconda.org/bioconda/bedtools
+-https://anaconda.org/hcc/cellranger
+
+Before beginning you will need the ucsc genome browser version of the mm39 mouse genome,
+which can be downloaded as follows:
+```
+curl -L -O http://hgdownload.cse.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz
+zcat mm39.fa.gz > mm39.fa
+```
+
+You will also need mm39 gene annotations in gtf format, which can be downloaded as follows:
+
+```
+curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/mus_musculus/Mus_musculus.GRCm39.108.gtf.gz
+zcat Mus_musculus.GRCm39.108.gtf.gz > Mus_musculus.GRCm39.108.gtf
+sed -i 's/^/chr/g' Mus_musculus.GRCm39.108.gtf
+sed -i 's/^chr#/#/g' Mus_musculus.GRCm39.108.gtf
+```
+
+You can then use the provided shell script to build the index:
+```
+bash make_custom_cellranger_reference.sh /path/to/mm39.fa /path/to/5pL1sc/L1_annotation/L1Md.bed /path/to/5pL1sc/L1_annotation/L1MdI.Consensus.fa /path/to/Mus_musculus.GRCm39.108.gtf L1Md_seperated_mm39
+```
+
+This will create the custom cellranger index in a new directory called L1Md\_seperated\_mm39
+
+
 ### Step 2: Cellranger
 
 Then you can run cellranger count to align reads and count gene UMIs. Instructions to
@@ -40,7 +72,7 @@ obtain and run cellranger count can be found here.
 
 On a machine with 16 cores and 64gb of memory, cellranger count can be executed as follows:
 ```
-cellranger count --sample=<sample name> --id=<output id> --transcriptome=/path/to/custom/index/hg38_L1_Alu --fastqs=/path/to/folder/with/raw/fastqs --localcores=16 --localmem=64
+cellranger count --sample=<sample name> --id=<output id> --transcriptome=/path/to/custom/index/L1HS_L1PA_seperated_hg38[L1Md_seperated_mm39] --fastqs=/path/to/folder/with/raw/fastqs --localcores=16 --localmem=64
 ```
 
 If combining multiple samples, we recommend running [cellranger aggr](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/aggregate) to downsample reads
