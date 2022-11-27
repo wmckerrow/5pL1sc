@@ -34,7 +34,6 @@ bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_ann
 This will create the custom cellranger index in a new directory called L1HS\_L1PA\_seperated\_hg38
 
 ### Step 1 v2: Build the custom cellranger index (mouse)
-### Step 1: Build the custom cellranger index (human)
 Building the cellranger custom index, will require bedtools and cellranger. Both are
 available for install via anaconda:
 -https://anaconda.org/bioconda/bedtools
