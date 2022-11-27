@@ -20,15 +20,14 @@ zcat hg38.fa.gz > hg38.fa
 You will also need hg38 gene annotations in gtf format, which can be downloaded as follows:
 
 ```
-curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
-zcat Homo_sapiens.GRCh38.108.gtf.gz > Homo_sapiens.GRCh38.108.gtf
-sed -i 's/^/chr/g' Homo_sapiens.GRCh38.108.gtf
-sed -i 's/^chr#/#/g' Homo_sapiens.GRCh38.108.gtf
+curl -L -O https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/hg38.refGene.gtf.gz
+zcat hg38.refGene.gtf.gz > hg38.refGene.gtf
+awk '!($1 ~ /_/)' hg38.refGene.gtf > hg38.refGene.fixed.gtf
 ```
 
 You can then use the provided shell script to build the index:
 ```
-bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_annotation/L1HS_and_PA.bed /path/to/5pL1sc/L1_annotation/L1HS_and_dfam_L1PA.fa /path/to/Homo_sapiens.GRCh38.108.gtf L1HS_L1PA_seperated_hg38
+bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_annotation/L1HS_and_PA.bed /path/to/5pL1sc/L1_annotation/L1HS_and_dfam_L1PA.fa /path/to/hg38.refGene.fixed.gtf L1HS_L1PA_seperated_hg38
 ```
 
 This will create the custom cellranger index in a new directory called L1HS\_L1PA\_seperated\_hg38
@@ -49,15 +48,13 @@ zcat mm39.fa.gz > mm39.fa
 You will also need mm39 gene annotations in gtf format, which can be downloaded as follows:
 
 ```
-curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/mus_musculus/Mus_musculus.GRCm39.108.gtf.gz
-zcat Mus_musculus.GRCm39.108.gtf.gz > Mus_musculus.GRCm39.108.gtf
-sed -i 's/^/chr/g' Mus_musculus.GRCm39.108.gtf
-sed -i 's/^chr#/#/g' Mus_musculus.GRCm39.108.gtf
+curl -L -O https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/genes/refGene.gtf.gz
+zcat refGene.gtf.gz > mm39.refGene.gtf
 ```
 
 You can then use the provided shell script to build the index:
 ```
-bash make_custom_cellranger_reference.sh /path/to/mm39.fa /path/to/5pL1sc/L1_annotation/L1Md.bed /path/to/5pL1sc/L1_annotation/L1MdI.Consensus.fa /path/to/Mus_musculus.GRCm39.108.gtf L1Md_seperated_mm39
+bash make_custom_cellranger_reference.sh /path/to/mm39.fa /path/to/5pL1sc/L1_annotation/L1Md.bed /path/to/5pL1sc/L1_annotation/L1MdI.Consensus.fa /path/to/mm39.refGene.gtf L1Md_seperated_mm39
 ```
 
 This will create the custom cellranger index in a new directory called L1Md\_seperated\_mm39
