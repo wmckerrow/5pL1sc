@@ -50,11 +50,12 @@ You will also need mm39 gene annotations in gtf format, which can be downloaded 
 ```
 curl -L -O https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/genes/refGene.gtf.gz
 zcat refGene.gtf.gz > mm39.refGene.gtf
+awk '!($1 ~ /_/)' mm39.refGene.gtf > mm39.refGene.fixed.gtf
 ```
 
 You can then use the provided shell script to build the index:
 ```
-bash make_custom_cellranger_reference.sh /path/to/mm39.fa /path/to/5pL1sc/L1_annotation/L1Md.bed /path/to/5pL1sc/L1_annotation/L1MdI.Consensus.fa /path/to/mm39.refGene.gtf L1Md_seperated_mm39
+bash make_custom_cellranger_reference.sh /path/to/mm39.fa /path/to/5pL1sc/L1_annotation/L1Md.bed /path/to/5pL1sc/L1_annotation/L1MdI.Consensus.fa /path/to/mm39.refGene.fixed.gtf L1Md_seperated_mm39
 ```
 
 This will create the custom cellranger index in a new directory called L1Md\_seperated\_mm39
