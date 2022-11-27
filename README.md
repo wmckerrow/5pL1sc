@@ -21,8 +21,8 @@ You will also need hg38 gene annotations in gtf format, which can be downloaded 
 
 ```
 curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
-zcat Homo_sapiens.GRCh38.108.chr.gtf.gz > Homo_sapiens.GRCh38.108.gtf
-sed -i 's/^/chr//g' Homo_sapiens.GRCh38.108.gtf
+zcat Homo_sapiens.GRCh38.108.gtf.gz > Homo_sapiens.GRCh38.108.gtf
+sed -i 's/^/chr/g' Homo_sapiens.GRCh38.108.gtf
 ```
 
 You can then use the provided shell script to build the index:
