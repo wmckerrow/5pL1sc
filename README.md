@@ -27,7 +27,7 @@ sed -i 's/^/chr/g' Homo_sapiens.GRCh38.108.gtf
 
 You can then use the provided shell script to build the index:
 ```
-bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_annotation/L1HS_and_PA.bed /path/to/5pL1sc/L1_annotation/L1HS_and_dfam_L1PA.fa /path/to/Homo_sapiens.GRCh38.108.gtf
+bash make_custom_cellranger_reference.sh /path/to/hg38.fa /path/to/5pL1sc/L1_annotation/L1HS_and_PA.bed /path/to/5pL1sc/L1_annotation/L1HS_and_dfam_L1PA.fa /path/to/Homo_sapiens.GRCh38.108.gtf L1HS_L1PA_seperated_hg38
 ```
 
 This will create the custom cellranger index in a new directory called L1HS\_L1PA\_seperated\_hg38
