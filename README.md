@@ -19,7 +19,8 @@ zcat hg38.fa.gz > hg38.fa
 
 You will also need hg38 gene annotations in gtf format, which can be downloaded as follows:
 
-```curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
+```
+curl -L -O https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz
 zcat Homo_sapiens.GRCh38.108.chr.gtf.gz > Homo_sapiens.GRCh38.108.gtf
 sed -i 's/^/chr//g' Homo_sapiens.GRCh38.108.gtf
 ```
